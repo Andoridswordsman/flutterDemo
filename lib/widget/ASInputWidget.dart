@@ -12,12 +12,14 @@ class ASInputWidget extends StatefulWidget {
 
   final TextEditingController controller;
 
-  ASInputWidget({Key key, this.hintText, this.iconData, this.onChanged, this.textStyle, this.controller}) : super(key: key);
+  final bool obscureText;
+
+  ASInputWidget({Key key, this.hintText, this.iconData, this.onChanged, this.textStyle, this.controller, this.obscureText = false}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return new _ASInputWidgetState(hintText, iconData, onChanged, textStyle, controller);
+    return new _ASInputWidgetState(hintText, iconData, onChanged, textStyle, controller, obscureText);
   }
 }
 
@@ -33,7 +35,9 @@ class _ASInputWidgetState extends State<ASInputWidget> {
 
   final TextEditingController controller;
 
-  _ASInputWidgetState(this.hintText, this.iconData, this.onChanged, this.textStyle, this.controller) : super();
+  final bool obscureText;
+
+  _ASInputWidgetState(this.hintText, this.iconData, this.onChanged, this.textStyle, this.controller, this.obscureText) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +45,7 @@ class _ASInputWidgetState extends State<ASInputWidget> {
     return new TextField(
       controller: controller,
       onChanged: onChanged,
+      obscureText: obscureText,
       decoration: new InputDecoration(
         hintText: hintText,
         icon: new Icon(iconData),

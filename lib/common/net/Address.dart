@@ -6,6 +6,7 @@ class Address {
   static const String online_host = "http://c.aixuexi.com/";
 
   static const String password_login = "password/login";
+  static const String login_success = "student/loginSuccess";
 
   static String fillUrl(String url, {List params}){
     String s = Config.DEBUG ? dev_host + url : online_host + url;

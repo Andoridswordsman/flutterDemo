@@ -3,7 +3,7 @@ import 'package:flutter_app/common/style/ASStyle.dart';
 import 'package:flutter_app/page/HomePage.dart';
 import 'package:flutter_app/widget/ASFlexButton.dart';
 import 'package:flutter_app/widget/ASInputWidget.dart';
-import 'package:flutter_app/common/net/Api.dart';
+import 'package:flutter_app/common/net/HttpManager.dart';
 import 'package:flutter_app/common/net/Address.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -20,8 +20,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  var username = "";
-  var password = "";
+  String username = "";
+  String password = "";
 
   final TextEditingController userController = new TextEditingController();
   final TextEditingController pwController = new TextEditingController();
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: "请输入账号",
 //                  controller: userController,
                   onChanged: (String value) {
-                    print(value);
+                    // print(value);
                     username = value;
                   },
                   iconData: Icons.access_alarm),
@@ -72,8 +72,9 @@ class _LoginPageState extends State<LoginPage> {
               new ASInputWidget(
                   hintText: "请输入密码",
 //                  controller: pwController,
+                  obscureText: true,
                   onChanged: (String value) {
-                    print(value);
+                    // print(value);
                     password = value;
                   },
                   iconData: Icons.access_alarm),
@@ -92,8 +93,18 @@ class _LoginPageState extends State<LoginPage> {
                     return;
                   }
                   Fluttertoast.showToast(msg: "login");
-                  var params = {"username": username, "password": password};
-                  HttpManager.netFetch(Address.fillUrl(Address.password_login), params, null, null);
+                  var params = {
+                    "username": username,
+                    "password": password
+                  };
+//                  HttpManager.netFetch(Address.fillUrl(Address.password_login), params, null, null);
+                  HttpManager.post(Address.password_login, (data) {
+                    setState(() {
+                      Fluttertoast.showToast(msg: data.toString());
+                    });
+                  }, params: params, errorCallBack: (errorMsg) {
+
+                  });
 //                  Navigator.pushReplacementNamed(context, HomePage.sName);
                 },
               )
