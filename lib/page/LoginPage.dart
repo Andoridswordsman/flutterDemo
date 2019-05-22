@@ -102,6 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                     setState(() {
                       Fluttertoast.showToast(msg: data.toString());
                     });
+                    Navigator.pushReplacementNamed(context, HomePage.sName);
                   }, params: params, errorCallBack: (errorMsg) {
 
                   });

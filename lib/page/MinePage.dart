@@ -17,20 +17,20 @@ class _MineState extends State<MinePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    flutterWebviewPlugin.close();
+    // flutterWebviewPlugin.close();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    flutterWebviewPlugin.dispose();
+    // flutterWebviewPlugin.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-//    return new WebviewScaffold(url: "http://www.baidu.com");
+  //return new WebviewScaffold(url: "http://www.baidu.com");
       return new Container(
         child: new Center(
           child: new Text(

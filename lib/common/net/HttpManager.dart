@@ -1,12 +1,11 @@
-import 'dart:collection';
-import 'dart:io';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_app/common/util/Config.dart';
-import 'package:flutter_app/common/net/ResultData.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app/common/net/Address.dart';
+import 'package:flutter_app/bean/Person.dart';
+
+var dio = new Dio();
 
 class HttpManager {
   static const String GET = "get";
@@ -38,18 +37,10 @@ class HttpManager {
         Fluttertoast.showToast(msg: "网络未连接");
         return;
       }
-      Fluttertoast.showToast(msg: "登录请求");
-      Dio dio = new Dio();
-      Options options;
-      if (method == GET) {
-        options = new Options(method: "GET");
-      } else {
-        options = new Options(method: "POST");
-      }
+      dio.options.baseUrl = Config.DEBUG ? Address.dev_host : Address.online_host;
       Response response;
-      // options.baseUrl = Config.DEBUG ? Address.dev_host : Address.online_host;
-      options.connectTimeout = 15000;
-      options.headers = {
+      dio.options.connectTimeout = 15000;
+      dio.options.headers = {
         'User-Agent': 'WeAppPlusPlayground/1.0',
         "appId": "1",
         "X-Requested-With": "X-Requested-With",
@@ -88,25 +79,25 @@ class HttpManager {
           }
       ));
     }
-//      dio.onHttpClientCreate = (HttpClient client) {
-//        // config the http client
-//        client.findProxy = (uri) {
-//          //proxy all request to localhost:8888
-//          return "PROXY 10.31.1.74:8888";//10.31.1.74:8888  192.168.5.109:8009
-//        };
-//        // you can also create a new HttpClient to dio
-//        // return new HttpClient();
-//      };
-
-//      url = Address.fillUrl(url);
-      print("请求url :<" + method + ">" + url);
+    if (method == GET) {
       if (params != null && params.isNotEmpty) {
-        print("请求参数 :" + params.toString());
+        response = await dio.get(url, queryParameters: params);
+      } else {
+        response = await dio.get(url);
       }
-      url = (Config.DEBUG ? Address.dev_host : Address.online_host) + url;
-      FormData formData = new FormData.from(params);
-      response = await dio.request(url, data: formData, options: options);
-      print("请求header :" + options.headers.toString());
+    } else {
+      if (params != null && params.isNotEmpty) {
+        FormData formData = new FormData.from(params);
+        response = await dio.post(url, data: formData);
+      } else {
+        response = await dio.post(url);
+      }
+    }
+    print("请求url :<" + method + ">" + url);
+    if (params != null && params.isNotEmpty) {
+      print("请求参数 :" + params.toString());
+    }
+    print("请求header :" + dio.options.headers.toString());
       // if (method == GET) {
       //   //组合GET请求的参数
       //   if (params != null && params.isNotEmpty) {
@@ -145,6 +136,7 @@ class HttpManager {
 
       if (callBack != null) {
         callBack(response.data["data"]);
+        // Person.fromJson(response.data["data"]);
 //        print("返回数据:" + response.data["data"]);
       }
     } catch (exception) {
