@@ -4,7 +4,7 @@ import 'package:flutter_app/page/HomePage.dart';
 import 'package:flutter_app/widget/ASFlexButton.dart';
 import 'package:flutter_app/widget/ASInputWidget.dart';
 import 'package:flutter_app/common/net/HttpManager.dart';
-import 'package:flutter_app/common/net/Address.dart';
+import 'package:flutter_app/common/net/api.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPage extends StatefulWidget {
@@ -97,16 +97,14 @@ class _LoginPageState extends State<LoginPage> {
                     "username": username,
                     "password": password
                   };
-//                  HttpManager.netFetch(Address.fillUrl(Address.password_login), params, null, null);
-                  HttpManager.post(Address.password_login, (data) {
+                  HttpManager.post(PASSWORD_LOGIN, (data) {
                     setState(() {
                       Fluttertoast.showToast(msg: data.toString());
                     });
                     Navigator.pushReplacementNamed(context, HomePage.sName);
                   }, params: params, errorCallBack: (errorMsg) {
-
+                    Fluttertoast.showToast(msg: errorMsg);
                   });
-//                  Navigator.pushReplacementNamed(context, HomePage.sName);
                 },
               )
             ],
