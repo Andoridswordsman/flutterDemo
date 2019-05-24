@@ -4,7 +4,6 @@ import 'package:flutter_app/common/net/api.dart';
 import 'package:flutter_app/bean/website.dart';
 import 'package:flutter_app/page/web_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class StudyPage extends StatefulWidget {
   @override
@@ -21,20 +20,7 @@ class _StudyState extends State<StudyPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future<bool> isLogin = get();
-    isLogin.then((isLogin) {
-      if (isLogin) {
-        Fluttertoast.showToast(msg: "success");
-      } else {
-        Fluttertoast.showToast(msg: "errorMsg");
-      }
-    });
     getData();
-  }
-
-  Future<bool> get() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.getBool("isLogin");
   }
 
   Future getData() async {

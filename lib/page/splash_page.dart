@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/common/util/SPUitl.dart';
 import 'package:flutter_app/page/home_page.dart';
 import 'package:flutter_app/page/login_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
   static final String sName = "/";
@@ -28,8 +28,7 @@ class _SplashPageState extends State<SplashPage> {
     // TODO: implement build
     new Future.delayed(const Duration(seconds: 2), () async {
       try {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        bool isLogin = prefs.get("isLogin") ?? false;
+        bool isLogin = await SPUtil.get("isLogin") ?? false;
         if (isLogin == true) {
           Navigator.of(context)
               .pushReplacement(new MaterialPageRoute(builder: (context) {
