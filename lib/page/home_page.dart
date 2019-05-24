@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/page/MinePage.dart';
-import 'package:flutter_app/page/StudyPage.dart';
+import 'package:flutter_app/page/mine_page.dart';
+import 'package:flutter_app/page/study_page.dart';
 
 class HomePage extends StatefulWidget {
 

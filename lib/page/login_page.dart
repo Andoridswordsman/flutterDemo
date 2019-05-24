@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/common/style/ASStyle.dart';
-import 'package:flutter_app/page/HomePage.dart';
+import 'package:flutter_app/page/home_page.dart';
 import 'package:flutter_app/widget/ASFlexButton.dart';
 import 'package:flutter_app/widget/ASInputWidget.dart';
 import 'package:flutter_app/common/net/HttpManager.dart';
 import 'package:flutter_app/common/net/api.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_app/common/util/SPUitl.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -98,9 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                     "password": password
                   };
                   HttpManager.post(PASSWORD_LOGIN, (data) {
-                    setState(() {
-                      Fluttertoast.showToast(msg: data.toString());
-                    });
+                    SPUtil.save("isLogin", true);
                     Navigator.pushReplacementNamed(context, HomePage.sName);
                   }, params: params, errorCallBack: (errorMsg) {
                     Fluttertoast.showToast(msg: errorMsg);
