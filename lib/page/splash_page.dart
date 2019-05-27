@@ -31,21 +31,21 @@ class _SplashPageState extends State<SplashPage> {
         bool isLogin = await SPUtil.get("isLogin") ?? false;
         if (isLogin == true) {
           Navigator.of(context)
-              .pushReplacement(new MaterialPageRoute(builder: (context) {
-            return new HomePage();
+              .pushReplacement(MaterialPageRoute(builder: (context) {
+            return HomePage();
           }));
         } else {
           Navigator.of(context)
-              .pushReplacement(new MaterialPageRoute(builder: (context) {
-            return new LoginPage();
+              .pushReplacement(MaterialPageRoute(builder: (context) {
+            return LoginPage();
           }));
         }
       } catch (e) {}
     });
-    return new Container(
+    return Container(
       color: Colors.white,
-      child: new Center(
-        child: new Image(image: new AssetImage("static/images/splashing.jpg")),
+      child: Center(
+        child: Image(image: AssetImage("static/images/splashing.jpg")),
       ),
     );
   }

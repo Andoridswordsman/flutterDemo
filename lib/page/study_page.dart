@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/common/net/HttpManager.dart';
 import 'package:flutter_app/common/net/api.dart';
 import 'package:flutter_app/bean/website.dart';
+import 'package:flutter_app/page/video_page.dart';
 import 'package:flutter_app/page/web_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -43,25 +44,32 @@ class _StudyState extends State<StudyPage> {
     List<ListTile> listTiles = _items
         .map((item) {
           return ListTile(
-            leading: new CircleAvatar(
+            leading: CircleAvatar(
                 backgroundImage: NetworkImage(item.imagePath),
                 backgroundColor: Colors.grey),
             title: Text(item.title),
             subtitle: Text(item.desc),
             onTap: () {
-              Navigator.push(context,
+              if (_items.indexOf(item).isOdd) {
+                Navigator.push(context,
+                  new MaterialPageRoute(builder: (BuildContext context) {
+                return new VideoPage();
+              }));
+              } else {
+                Navigator.push(context,
                   new MaterialPageRoute(builder: (BuildContext context) {
                 return new WebPage(item);
               }));
+              }
             },
           );
         })
         .cast<ListTile>()
         .toList();
     return new Scaffold(
-        appBar: new AppBar(title: const Text("网站列表")),
-        body: new RefreshIndicator(
-            child: new ListView(
+        appBar: AppBar(title: const Text("网站列表")),
+        body: RefreshIndicator(
+            child: ListView(
                 children: ListTile.divideTiles(
                         context: this.context, tiles: listTiles)
                     .toList()),

@@ -9,12 +9,12 @@ class WebPage extends StatefulWidget {
   WebPage(this.data);
 
   @override
-  State<StatefulWidget> createState() => new _WebState();
+  State<StatefulWidget> createState() => _WebState();
 }
 
 class _WebState extends State<WebPage> {
 
-  final flutterWebviewPlugin = new FlutterWebviewPlugin();
+  final flutterWebviewPlugin = FlutterWebviewPlugin();
 
   @override
   void initState() {
@@ -34,11 +34,11 @@ class _WebState extends State<WebPage> {
     String title = widget.data.title == null
         ? widget.data.desc
         : widget.data.title;
-    return new WebviewScaffold(
+    return WebviewScaffold(
       url: widget.data.url,
       withJavascript: true,
-      appBar: new AppBar(
-        title: new Text(title),
+      appBar: AppBar(
+        title: Text(title),
       )
     );
   }
